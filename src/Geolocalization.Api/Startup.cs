@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Geolocalization.Api.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace Geolocalization.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)))
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
