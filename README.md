@@ -36,3 +36,19 @@ Only for test purposes, you can test if your point is inside cover area using [g
   ]
 }
 ```
+
+
+## Query on mongo db
+
+```
+db.Partners.find({
+    CoverageArea :{
+        $geoIntersects: {
+            $geometry: { 
+                type: "Point", 
+                coordinates: [40,10]
+            }
+        }
+    }
+});
+```
