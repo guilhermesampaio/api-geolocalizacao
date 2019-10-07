@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Geolocalization.Api.Options;
+﻿using Geolocalization.Api.Options;
+using Geolocalization.Api.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace Geolocalization.Api
 {
@@ -26,6 +21,7 @@ namespace Geolocalization.Api
         {
             services
                 .Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)))
+                .AddScoped<IPartnersRepository, PartnersRepository>()
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
