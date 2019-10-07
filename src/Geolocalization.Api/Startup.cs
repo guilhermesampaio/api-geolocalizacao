@@ -21,7 +21,7 @@ namespace Geolocalization.Api
         {
             services
                 .Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)))
-                .AddScoped<IPartnersRepository, PartnersRepository>()
+                .AddTransient<IPartnersRepository, PartnersRepository>()
                 .AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
