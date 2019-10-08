@@ -27,7 +27,6 @@ namespace Geolocalization.Application.Command.Handlers
                 coverageArea,
                 address);
 
-
             await _repository.Create(partner);
 
             return partner;

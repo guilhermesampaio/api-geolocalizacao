@@ -1,18 +1,25 @@
 ﻿using Geolocalization.Application.Query.Queries;
+using Geolocalization.Domain.Entities;
+using Geolocalization.Domain.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Geolocalization.Application.Query.Handlers
 {
-    public class GetPartnerByIdQueryHandler : IRequestHandler<GetPartnerByIdQuery>
+    public class GetPartnerByIdQueryHandler : IRequestHandler<GetPartnerByIdQuery, Partner>
     {
-        public Task<Unit> Handle(GetPartnerByIdQuery request, CancellationToken cancellationToken)
+        private readonly IPartnersRepository _repository;
+
+        public GetPartnerByIdQueryHandler(IPartnersRepository repository)
         {
-            throw new NotImplementedException();
+            _repository = repository;
+        }
+
+        public async Task<Partner> Handle(GetPartnerByIdQuery request, CancellationToken cancellationToken)
+        {
+            var partner = await _repository.Get(request.Id);
+            return partner;
         }
     }
 }
