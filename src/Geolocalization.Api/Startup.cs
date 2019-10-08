@@ -1,5 +1,6 @@
-﻿using Geolocalization.Api.Options;
-using Geolocalization.Api.Repositories;
+﻿using FluentValidation.AspNetCore;
+using Geolocalization.Api.Validators;
+using Geolocalization.IoC.Injectors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,11 @@ namespace Geolocalization.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .Configure<DatabaseSettings>(Configuration.GetSection(nameof(DatabaseSettings)))
-                .AddTransient<IPartnersRepository, PartnersRepository>()
+                .RegisterOptions(Configuration)
+                .AddRepositories()
+                .AddMediatr()
                 .AddMvc()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<PartnerValidator>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

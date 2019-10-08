@@ -1,5 +1,6 @@
-﻿using Geolocalization.Api.Entities;
-using Geolocalization.Api.Options;
+﻿using Geolocalization.CrossCutting.Options;
+using Geolocalization.Domain.Entities;
+using Geolocalization.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
@@ -7,15 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Geolocalization.Api.Repositories
+namespace Geolocalization.Infra.Data
 {
-    public interface IPartnersRepository
-    {
-        Task Create(Partner partner);
-        Task<PartnerMongoDb> Get(int id);
-        Task<PartnerMongoDb> GetByCoordinates(double latitude, double longitude);
-    }
-
     public class PartnersRepository : IPartnersRepository
     {
         private readonly IMongoCollection<PartnerMongoDb> _collection;
@@ -70,13 +64,16 @@ namespace Geolocalization.Api.Repositories
 
         }
 
-        public async Task<PartnerMongoDb> Get(int id)
+        public async Task<Partner> Get(int id)
         {
             var partner = await _collection.Find(it => it.Id == id).FirstOrDefaultAsync();
-            return partner;
+
+            //TODO: Implement cast to entity
+
+            return null;
         }
 
-        public async Task<PartnerMongoDb> GetByCoordinates(double latitude, double longitude)
+        public async Task<Partner> GetByCoordinates(double latitude, double longitude)
         {
             var coordinates = new GeoJson2DGeographicCoordinates(longitude, latitude);
             var point = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(coordinates);
@@ -84,7 +81,10 @@ namespace Geolocalization.Api.Repositories
 
             var partner = await _collection.Find(filter).FirstOrDefaultAsync();
 
-            return partner;
+            // TODO: Implement cast to entity
+
+            return null;
         }
     }
+    
 }

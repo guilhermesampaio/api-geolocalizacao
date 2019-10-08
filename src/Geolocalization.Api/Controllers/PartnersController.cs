@@ -1,8 +1,7 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using Geolocalization.Api.Entities;
-using Geolocalization.Api.Repositories;
+﻿using Geolocalization.Application.Command.Commands;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Geolocalization.Api.Controllers
 {
@@ -10,49 +9,46 @@ namespace Geolocalization.Api.Controllers
     [ApiController]
     public class PartnersController : ControllerBase
     {
-        private readonly IPartnersRepository _partnersRepository;
+        private readonly IMediator _mediator;
 
-        public PartnersController(IPartnersRepository partnersRepository)
+        public PartnersController(IMediator mediator)
         {
-            _partnersRepository = partnersRepository;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var partner = await _partnersRepository.Get(id);
-            return Ok(partner);
+            _mediator = mediator;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]Partner partner)
+        public async Task<IActionResult> Create([FromBody]CreatePartnerCommand request)
         {
-            try
+
+            if (!ModelState.IsValid)
             {
-                await _partnersRepository.Create(partner);
-                return CreatedAtAction(nameof(Get), new { id = partner.Id });
+                return BadRequest(ModelState);
             }
-            catch (System.Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
-            }            
+
+            var response = await _mediator.Send(request);
+
+            
+            // TODO: Return created object
+            return CreatedAtAction(nameof(GetById), new { id = request.Id }, request);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetByCoordinates([FromQuery]Coordinates coordinates)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
         {
-            var partner = await _partnersRepository.GetByCoordinates(coordinates.Latitude, coordinates.Longitude);
-
-            if (partner is null)
-                return NotFound();
-
+            //var partner = await _partnersRepository.Get(id);
+            var partner = new { };
             return Ok(partner);
         }
-    }
 
-    public class Coordinates
-    {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        //[HttpGet]
+        //public async Task<IActionResult> GetByCoordinates([FromQuery]CoordinatesRequest coordinates)
+        //{
+        //    var partner = await _partnersRepository.GetByCoordinates(coordinates.Latitude, coordinates.Longitude);
+
+        //    if (partner is null)
+        //        return NotFound(default(object));
+
+        //    return Ok(partner);
+        //}
     }
 }

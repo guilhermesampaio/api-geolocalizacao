@@ -6,10 +6,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="8.5.0" />
+    <PackageReference Include="MediatR" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Geolocalization.Application.Command\Geolocalization.Application.Command.csproj" />
+    <ProjectReference Include="..\Geolocalization.Application.Query\Geolocalization.Application.Query.csproj" />
+    <ProjectReference Include="..\Geolocalization.IoC\Geolocalization.IoC.csproj" />
   </ItemGroup>
 
 </Project>

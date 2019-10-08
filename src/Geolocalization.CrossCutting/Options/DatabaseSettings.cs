@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Geolocalization.Api.Options
+﻿namespace Geolocalization.CrossCutting.Options
 {
     public class DatabaseSettings
     {

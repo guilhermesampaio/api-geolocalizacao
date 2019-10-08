@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using MongoDB.Driver.GeoJsonObjectModel;
+﻿using MediatR;
+using System.Collections.Generic;
 
-namespace Geolocalization.Api.Entities
+namespace Geolocalization.Application.Command.Commands
 {
-    public class Partner
+    public class CreatePartnerCommand : IRequest
     {
         public int Id { get; set; }
         public string TradingName { get; set; }
@@ -11,7 +11,6 @@ namespace Geolocalization.Api.Entities
         public string Document { get; set; }
         public MultiPolygon CoverageArea { get; set; }
         public Point Address { get; set; }
-
     }
 
     public abstract class GeoPosition
@@ -28,16 +27,4 @@ namespace Geolocalization.Api.Entities
     {
         public IEnumerable<double> Coordinates { get; set; }
     }
-
-    public class PartnerMongoDb
-    {
-        public int Id { get; set; }
-        public string TradingName { get; set; }
-        public string OwnerName { get; set; }
-        public string Document { get; set; }
-        public GeoJsonMultiPolygon<GeoJson2DGeographicCoordinates> CoverageArea { get; set; }
-        public Point Address { get; set; }
-
-    }
 }
-
