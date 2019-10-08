@@ -1,5 +1,7 @@
 ﻿using Geolocalization.Domain.Entities;
+using MongoDB.Bson;
 using MongoDB.Driver.GeoJsonObjectModel;
+using System;
 
 namespace Geolocalization.Infra.Data
 {
@@ -10,7 +12,7 @@ namespace Geolocalization.Infra.Data
         public string OwnerName { get; set; }
         public string Document { get; set; }
         public GeoJsonMultiPolygon<GeoJson2DGeographicCoordinates> CoverageArea { get; set; }
-        public Point Address { get; set; }
+        public GeoJsonPoint<GeoJson2DGeographicCoordinates> Address { get; set; }
 
     }
     

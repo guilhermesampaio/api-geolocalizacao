@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Geolocalization.Application.Command.Handlers
 {
-    public class CreatePartnerCommandHandler : IRequestHandler<CreatePartnerCommand>
+    public class CreatePartnerCommandHandler : IRequestHandler<CreatePartnerCommand, Partner>
     {
         private readonly IPartnersRepository _repository;
 
@@ -16,22 +16,21 @@ namespace Geolocalization.Application.Command.Handlers
             _repository = repository;
         }
 
-        public async Task<Unit> Handle(CreatePartnerCommand request, CancellationToken cancellationToken)
+        public async Task<Partner> Handle(CreatePartnerCommand request, CancellationToken cancellationToken)
         {
             var coverageArea = new Domain.Entities.MultiPolygon(request.CoverageArea.Coordinates);
             var address = new Domain.Entities.Point(request.Address.Coordinates);
 
-            var entity = new Partner(request.Id, 
-                request.TradingName, 
+            var partner = new Partner(request.TradingName, 
                 request.OwnerName, 
                 request.Document,
                 coverageArea,
                 address);
 
 
-            await _repository.Create(entity);
+            await _repository.Create(partner);
 
-            return Unit.Value;
+            return partner;
         }
     }
 }

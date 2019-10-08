@@ -1,11 +1,11 @@
-﻿using MediatR;
+﻿using Geolocalization.Domain.Entities;
+using MediatR;
 using System.Collections.Generic;
 
 namespace Geolocalization.Application.Command.Commands
 {
-    public class CreatePartnerCommand : IRequest
+    public class CreatePartnerCommand : IRequest<Partner>
     {
-        public int Id { get; set; }
         public string TradingName { get; set; }
         public string OwnerName { get; set; }
         public string Document { get; set; }

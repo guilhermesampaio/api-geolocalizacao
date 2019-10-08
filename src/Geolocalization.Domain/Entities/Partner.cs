@@ -1,10 +1,12 @@
-﻿namespace Geolocalization.Domain.Entities
+﻿using System;
+
+namespace Geolocalization.Domain.Entities
 {
     public class Partner
     {
-        public Partner(int id, string tradingName, string ownerName, string document, MultiPolygon coverageArea, Point address)
+        public Partner(string tradingName, string ownerName, string document, MultiPolygon coverageArea, Point address)
         {
-            Id = id;
+            Id = new Random().Next(1, int.MaxValue);
             TradingName = tradingName;
             OwnerName = ownerName;
             Document = document;
@@ -18,7 +20,6 @@
         public string Document { get; }
         public MultiPolygon CoverageArea { get; }
         public Point Address { get; }
-
     }
 }
 

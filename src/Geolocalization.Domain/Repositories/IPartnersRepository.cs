@@ -1,4 +1,5 @@
 ﻿using Geolocalization.Domain.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace Geolocalization.Domain.Repositories

@@ -4,6 +4,7 @@ using Geolocalization.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,6 +50,8 @@ namespace Geolocalization.Infra.Data
             }
 
             var coverageArea = GeoJson.MultiPolygon(polygonsCoodinates.ToArray());
+            var addressCoordinates = partner.Address.Coordinates.ToArray();            
+            var address = GeoJson.Point(new GeoJson2DGeographicCoordinates(addressCoordinates[0], addressCoordinates[1]));
 
             var partnerDb = new PartnerMongoDb()
             {
@@ -57,11 +60,10 @@ namespace Geolocalization.Infra.Data
                 Document = partner.Document,
                 OwnerName = partner.OwnerName,
                 TradingName = partner.TradingName,
-                Address = partner.Address
+                Address = address
             };
 
             await _collection.InsertOneAsync(partnerDb);
-
         }
 
         public async Task<Partner> Get(int id)
@@ -69,7 +71,6 @@ namespace Geolocalization.Infra.Data
             var partner = await _collection.Find(it => it.Id == id).FirstOrDefaultAsync();
 
             //TODO: Implement cast to entity
-
             return null;
         }
 
@@ -82,7 +83,6 @@ namespace Geolocalization.Infra.Data
             var partner = await _collection.Find(filter).FirstOrDefaultAsync();
 
             // TODO: Implement cast to entity
-
             return null;
         }
     }

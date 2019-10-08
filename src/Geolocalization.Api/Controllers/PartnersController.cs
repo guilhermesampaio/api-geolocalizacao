@@ -19,17 +19,14 @@ namespace Geolocalization.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreatePartnerCommand request)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var response = await _mediator.Send(request);
+            var partner = await _mediator.Send(request);
 
-            
-            // TODO: Return created object
-            return CreatedAtAction(nameof(GetById), new { id = request.Id }, request);
+            return CreatedAtAction(nameof(GetById), new { id = partner.Id }, partner);
         }
 
         [HttpGet("{id}")]

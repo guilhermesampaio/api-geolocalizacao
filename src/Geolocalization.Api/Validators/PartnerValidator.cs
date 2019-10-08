@@ -9,7 +9,6 @@ namespace Geolocalization.Api.Validators
     {
         public PartnerValidator()
         {
-            RuleFor(x => x.Id).NotNull();
             RuleFor(x => x.Document).NotEmpty();
             RuleFor(x => x.OwnerName).NotEmpty();
             RuleFor(x => x.TradingName).NotEmpty();
