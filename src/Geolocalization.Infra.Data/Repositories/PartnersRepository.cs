@@ -1,12 +1,13 @@
-﻿using Geolocalization.CrossCutting.Options;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Geolocalization.CrossCutting.Options;
 using Geolocalization.Domain.Entities;
 using Geolocalization.Domain.Repositories;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Geolocalization.Infra.Data
 {
@@ -20,9 +21,10 @@ namespace Geolocalization.Infra.Data
             var client = new MongoClient(databaseSettings?.ConnectionString);
             var database = client.GetDatabase(databaseSettings?.DatabaseName);
             _collection = database.GetCollection<PartnerMongoDb>(CollectionName);
+            BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
         }
 
-        public async Task Create(Partner partner)
+        public async Task<string> Create(Partner partner)
         {
             var polygonsCoodinates = new List<GeoJsonPolygonCoordinates<GeoJson2DGeographicCoordinates>>();
 
@@ -54,7 +56,6 @@ namespace Geolocalization.Infra.Data
 
             var partnerDb = new PartnerMongoDb()
             {
-                Id = partner.Id,
                 CoverageArea = coverageArea,
                 Document = partner.Document,
                 OwnerName = partner.OwnerName,
@@ -63,14 +64,19 @@ namespace Geolocalization.Infra.Data
             };
 
             await _collection.InsertOneAsync(partnerDb);
+
+            return partnerDb.Id.ToString();
         }
 
-        public async Task<Partner> Get(int id)
+        public async Task<Partner> Get(string id)
         {
-            var partner = await _collection.Find(it => it.Id == id).FirstOrDefaultAsync();
+            var partnerDb = await _collection.Find(it => it.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
 
-            //TODO: Implement cast to entity
-            return null;
+            // TODO: Set multi polygon and point
+            var partner = new Partner(partnerDb.TradingName, partnerDb.OwnerName, partnerDb.Document, null, null);
+
+           
+            return partner;
         }
 
         public async Task<Partner> GetByCoordinates(double latitude, double longitude)

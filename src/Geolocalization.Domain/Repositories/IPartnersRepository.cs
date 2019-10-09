@@ -6,8 +6,8 @@ namespace Geolocalization.Domain.Repositories
 {
     public interface IPartnersRepository
     {
-        Task Create(Partner partner);
-        Task<Partner> Get(int id);
+        Task<string> Create(Partner partner);
+        Task<Partner> Get(string id);
         Task<Partner> GetByCoordinates(double latitude, double longitude);
     }
 }

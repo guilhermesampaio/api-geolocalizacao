@@ -1,9 +1,9 @@
-﻿using Geolocalization.Application.Command.Commands;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Geolocalization.Application.Command.Commands;
 using Geolocalization.Domain.Entities;
 using Geolocalization.Domain.Repositories;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Geolocalization.Application.Command.Handlers
 {
@@ -27,7 +27,9 @@ namespace Geolocalization.Application.Command.Handlers
                 coverageArea,
                 address);
 
-            await _repository.Create(partner);
+            var partnerId = await _repository.Create(partner);
+
+            partner.SetId(partnerId);
 
             return partner;
         }

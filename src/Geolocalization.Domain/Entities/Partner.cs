@@ -6,7 +6,6 @@ namespace Geolocalization.Domain.Entities
     {
         public Partner(string tradingName, string ownerName, string document, MultiPolygon coverageArea, Point address)
         {
-            Id = new Random().Next(1, int.MaxValue);
             TradingName = tradingName;
             OwnerName = ownerName;
             Document = document;
@@ -14,12 +13,17 @@ namespace Geolocalization.Domain.Entities
             Address = address;
         }
 
-        public int Id { get; }
+        public string Id { get; private set; }
         public string TradingName { get; }
         public string OwnerName { get; }
         public string Document { get; }
         public MultiPolygon CoverageArea { get; }
         public Point Address { get; }
+
+        public void SetId(string id)
+        {
+            Id = string.IsNullOrWhiteSpace(Id) ? id : Id;
+        }
     }
 }
 

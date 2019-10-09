@@ -1,9 +1,9 @@
-﻿using Geolocalization.Application.Query.Queries;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Geolocalization.Application.Query.Queries;
 using Geolocalization.Domain.Entities;
 using Geolocalization.Domain.Repositories;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Geolocalization.Application.Query.Handlers
 {
@@ -19,6 +19,7 @@ namespace Geolocalization.Application.Query.Handlers
         public async Task<Partner> Handle(GetPartnerByIdQuery request, CancellationToken cancellationToken)
         {
             var partner = await _repository.Get(request.Id);
+
             return partner;
         }
     }

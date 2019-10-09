@@ -1,6 +1,8 @@
 ﻿using Geolocalization.Application.Command.Commands;
+using Geolocalization.Application.Query.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace Geolocalization.Api.Controllers
@@ -30,10 +32,10 @@ namespace Geolocalization.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(string id)
         {
-            //var partner = await _partnersRepository.Get(id);
-            var partner = new { };
+            var partner = await _mediator.Send(new GetPartnerByIdQuery(id));
+
             return Ok(partner);
         }
 
