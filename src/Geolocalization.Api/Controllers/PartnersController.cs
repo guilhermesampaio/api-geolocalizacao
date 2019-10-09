@@ -2,7 +2,6 @@
 using Geolocalization.Application.Query.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace Geolocalization.Api.Controllers
@@ -36,18 +35,21 @@ namespace Geolocalization.Api.Controllers
         {
             var partner = await _mediator.Send(new GetPartnerByIdQuery(id));
 
+            if (partner is null)
+                return NotFound(default(object));
+
             return Ok(partner);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetByCoordinates([FromQuery]CoordinatesRequest coordinates)
-        //{
-        //    var partner = await _partnersRepository.GetByCoordinates(coordinates.Latitude, coordinates.Longitude);
+        [HttpGet]
+        public async Task<IActionResult> GetByCoordinates([FromQuery]CoordinatesRequest coordinates)
+        {
+            var partner = await _mediator.Send(new GetPartnerByCoordinatesQuery(coordinates.Latitude, coordinates.Longitude));
 
-        //    if (partner is null)
-        //        return NotFound(default(object));
+            if (partner is null)
+                return NotFound(default(object));
 
-        //    return Ok(partner);
-        //}
+            return Ok(partner);
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Geolocalization.Domain.Entities
+﻿namespace Geolocalization.Domain.Entities
 {
     public class Partner
     {
@@ -11,6 +9,12 @@ namespace Geolocalization.Domain.Entities
             Document = document;
             CoverageArea = coverageArea;
             Address = address;
+        }
+
+        public Partner(string id, string tradingName, string ownerName, string document, MultiPolygon coverageArea, Point address)
+            : this(tradingName, ownerName, document, coverageArea, address)
+        {
+            Id = id;
         }
 
         public string Id { get; private set; }

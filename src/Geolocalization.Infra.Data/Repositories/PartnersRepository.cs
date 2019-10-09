@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Geolocalization.CrossCutting.Options;
+﻿using Geolocalization.CrossCutting.Options;
 using Geolocalization.Domain.Entities;
 using Geolocalization.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
+using System.Threading.Tasks;
 
 namespace Geolocalization.Infra.Data
 {
@@ -21,47 +19,11 @@ namespace Geolocalization.Infra.Data
             var client = new MongoClient(databaseSettings?.ConnectionString);
             var database = client.GetDatabase(databaseSettings?.DatabaseName);
             _collection = database.GetCollection<PartnerMongoDb>(CollectionName);
-            BsonDefaults.GuidRepresentation = GuidRepresentation.Standard;
         }
 
         public async Task<string> Create(Partner partner)
         {
-            var polygonsCoodinates = new List<GeoJsonPolygonCoordinates<GeoJson2DGeographicCoordinates>>();
-
-            foreach (var multipolygon in partner.CoverageArea.Coordinates)
-            {
-                foreach (var polygon in multipolygon)
-                {
-                    var points = new List<GeoJson2DGeographicCoordinates>();
-                    foreach (var coordinates in polygon)
-                    {
-                        var coordinatesArray = coordinates.ToArray();
-                        var longitude = coordinatesArray[0];
-                        var latitude = coordinatesArray[1];
-
-                        var point = new GeoJson2DGeographicCoordinates(longitude, latitude);
-                        points.Add(point);
-                    }
-
-                    var linearRings = new GeoJsonLinearRingCoordinates<GeoJson2DGeographicCoordinates>(points);
-                    var polygonCoordinates = new GeoJsonPolygonCoordinates<GeoJson2DGeographicCoordinates>(linearRings);
-                    polygonsCoodinates.Add(polygonCoordinates);
-                }
-
-            }
-
-            var coverageArea = GeoJson.MultiPolygon(polygonsCoodinates.ToArray());
-            var addressCoordinates = partner.Address.Coordinates.ToArray();            
-            var address = GeoJson.Point(new GeoJson2DGeographicCoordinates(addressCoordinates[0], addressCoordinates[1]));
-
-            var partnerDb = new PartnerMongoDb()
-            {
-                CoverageArea = coverageArea,
-                Document = partner.Document,
-                OwnerName = partner.OwnerName,
-                TradingName = partner.TradingName,
-                Address = address
-            };
+            var partnerDb = partner.ToPartnerMongoDb();
 
             await _collection.InsertOneAsync(partnerDb);
 
@@ -70,13 +32,16 @@ namespace Geolocalization.Infra.Data
 
         public async Task<Partner> Get(string id)
         {
-            var partnerDb = await _collection.Find(it => it.Id == ObjectId.Parse(id)).FirstOrDefaultAsync();
+            var partnerDb = await _collection
+                .Find(it => it.Id == ObjectId.Parse(id))
+                .FirstOrDefaultAsync();
 
-            // TODO: Set multi polygon and point
-            var partner = new Partner(partnerDb.TradingName, partnerDb.OwnerName, partnerDb.Document, null, null);
+            if (partnerDb == null)
+                return default(Partner);
 
-           
-            return partner;
+            var partnerEntity = partnerDb.ToPartnerEntity();
+
+            return partnerEntity;
         }
 
         public async Task<Partner> GetByCoordinates(double latitude, double longitude)
@@ -84,12 +49,15 @@ namespace Geolocalization.Infra.Data
             var coordinates = new GeoJson2DGeographicCoordinates(longitude, latitude);
             var point = new GeoJsonPoint<GeoJson2DGeographicCoordinates>(coordinates);
             var filter = Builders<PartnerMongoDb>.Filter.GeoIntersects(x => x.CoverageArea, point);
+            var partnerDb = await _collection.Find(filter).FirstOrDefaultAsync();
 
-            var partner = await _collection.Find(filter).FirstOrDefaultAsync();
+            if (partnerDb == null)
+                return default(Partner);
 
-            // TODO: Implement cast to entity
-            return null;
+            var partner = partnerDb.ToPartnerEntity();
+
+            return partner;
         }
     }
-    
+
 }

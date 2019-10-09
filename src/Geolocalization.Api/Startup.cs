@@ -1,4 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
+using Geolocalization.Api.Extensions;
 using Geolocalization.Api.Validators;
 using Geolocalization.IoC.Injectors;
 using Microsoft.AspNetCore.Builder;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Geolocalization.Api
 {
@@ -29,14 +31,16 @@ namespace Geolocalization.Api
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+
+            app.ConfigureExceptionHandler(logger)
+                .UseMvc();
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver.GeoJsonObjectModel;
 
 namespace Geolocalization.Infra.Data
