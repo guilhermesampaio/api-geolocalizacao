@@ -18,11 +18,17 @@ namespace Geolocalization.Api.Validators
 
         private static bool ValidateAddress(Point point)
         {
+            if (point is null || point.Coordinates is null)
+                return false;
+
             return string.Compare(point.Type, "point", StringComparison.InvariantCultureIgnoreCase) == 0 && point.Coordinates.Any();
         }
 
         private static bool ValidateCoverageArea(MultiPolygon multipolygon)
         {
+            if (multipolygon is null || multipolygon.Coordinates is null)
+                return false;
+
             return string.Compare(multipolygon.Type, "multipolygon", StringComparison.InvariantCultureIgnoreCase) == 0 && multipolygon.Coordinates.Any();
         }
     }
