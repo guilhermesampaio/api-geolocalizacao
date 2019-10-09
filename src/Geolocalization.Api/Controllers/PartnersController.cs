@@ -26,7 +26,7 @@ namespace Geolocalization.Api.Controllers
             }
 
             var partner = await _mediator.Send(request);
-
+            
             return CreatedAtAction(nameof(GetById), new { id = partner.Id }, partner);
         }
 

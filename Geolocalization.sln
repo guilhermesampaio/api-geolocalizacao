@@ -5,17 +5,23 @@ VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.Api", "src\Geolocalization.Api\Geolocalization.Api.csproj", "{DA5B77AC-AADD-418D-95B3-30DF92A6604B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocalization.Application.Command", "src\Geolocalization.Application.Command\Geolocalization.Application.Command.csproj", "{BF02F2D1-D602-4167-B03C-891192A7808B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.Application.Command", "src\Geolocalization.Application.Command\Geolocalization.Application.Command.csproj", "{BF02F2D1-D602-4167-B03C-891192A7808B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocalization.Application.Query", "src\Geolocalization.Application.Query\Geolocalization.Application.Query.csproj", "{44BBDD77-A772-4656-9CA8-3506D676C699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.Application.Query", "src\Geolocalization.Application.Query\Geolocalization.Application.Query.csproj", "{44BBDD77-A772-4656-9CA8-3506D676C699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocalization.IoC", "src\Geolocalization.IoC\Geolocalization.IoC.csproj", "{25AB99B3-4CAC-470F-813D-D9196CCFC845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.IoC", "src\Geolocalization.IoC\Geolocalization.IoC.csproj", "{25AB99B3-4CAC-470F-813D-D9196CCFC845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocalization.Domain", "src\Geolocalization.Domain\Geolocalization.Domain.csproj", "{2821D7FC-51E9-4113-B818-5866C8A4699D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.Domain", "src\Geolocalization.Domain\Geolocalization.Domain.csproj", "{2821D7FC-51E9-4113-B818-5866C8A4699D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocalization.Infra.Data", "src\Geolocalization.Infra.Data\Geolocalization.Infra.Data.csproj", "{32FBA42F-E40F-496E-BB46-75138AACE2C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.Infra.Data", "src\Geolocalization.Infra.Data\Geolocalization.Infra.Data.csproj", "{32FBA42F-E40F-496E-BB46-75138AACE2C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocalization.CrossCutting", "src\Geolocalization.CrossCutting\Geolocalization.CrossCutting.csproj", "{0904870E-A26B-49EF-A6E0-A53C8E2D94FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geolocalization.CrossCutting", "src\Geolocalization.CrossCutting\Geolocalization.CrossCutting.csproj", "{0904870E-A26B-49EF-A6E0-A53C8E2D94FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9D18D294-3C9D-4431-9F62-720B6F4623FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{42A88E15-E14E-4D46-A092-D26C78D8BA12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geolocation.Tests", "test\Geolocation.Tests\Geolocation.Tests.csproj", "{1868C08A-F64A-4EC8-B0DE-E6E63161987C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -111,9 +117,31 @@ Global
 		{0904870E-A26B-49EF-A6E0-A53C8E2D94FA}.Release|x64.Build.0 = Release|Any CPU
 		{0904870E-A26B-49EF-A6E0-A53C8E2D94FA}.Release|x86.ActiveCfg = Release|Any CPU
 		{0904870E-A26B-49EF-A6E0-A53C8E2D94FA}.Release|x86.Build.0 = Release|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Debug|x64.Build.0 = Debug|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Debug|x86.Build.0 = Debug|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Release|x64.ActiveCfg = Release|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Release|x64.Build.0 = Release|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Release|x86.ActiveCfg = Release|Any CPU
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DA5B77AC-AADD-418D-95B3-30DF92A6604B} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{BF02F2D1-D602-4167-B03C-891192A7808B} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{44BBDD77-A772-4656-9CA8-3506D676C699} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{25AB99B3-4CAC-470F-813D-D9196CCFC845} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{2821D7FC-51E9-4113-B818-5866C8A4699D} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{32FBA42F-E40F-496E-BB46-75138AACE2C5} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{0904870E-A26B-49EF-A6E0-A53C8E2D94FA} = {9D18D294-3C9D-4431-9F62-720B6F4623FE}
+		{1868C08A-F64A-4EC8-B0DE-E6E63161987C} = {42A88E15-E14E-4D46-A092-D26C78D8BA12}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4A6D1749-2E0C-41B1-BED0-6F614B820A01}
